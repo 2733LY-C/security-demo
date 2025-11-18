@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -17,6 +18,8 @@ import java.util.Objects;
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,7 +31,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户不存在");
         }
 
-        //判断密码是否正确 TODO
+        //判断密码是否正确
+        passwordEncoder.matches(user.getPassword(),user.getPassword());
 
         //返回UserDetails
         return new LoginUser(user);

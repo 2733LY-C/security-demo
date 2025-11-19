@@ -31,8 +31,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户不存在");
         }
 
-        //判断密码是否正确
-        passwordEncoder.matches(user.getPassword(),user.getPassword());
 
         //返回UserDetails
         return new LoginUser(user);
